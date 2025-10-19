@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -8,33 +9,131 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Linked external CSS file instead of inline styles -->
     <link rel="stylesheet" href="css/assets/styles.css">
+    <style>
+        /* Add product shop styling */
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--primary-color);
+            box-shadow: 0 30px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .product-card.featured {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(244, 208, 63, 0.05) 100%);
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .product-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .product-price-currency {
+            font-size: 1.2rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .product-features li {
+            padding: 0.8rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .product-features li:last-child {
+            border-bottom: none;
+        }
+
+        .product-features i {
+            color: var(--primary-color);
+            margin-right: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-buy {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-buy:hover {
+            background-color: #f4d03f;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .shop-section {
+            padding: 5rem 0;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">⛏️ MINECRAFT SERVER</a>
+            <a class="navbar-brand" href="#">PREMIUM</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#home">Trang Chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#games">Game Modes</a>
+                        <a class="nav-link" href="#features">Tính Năng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#register">Đăng Ký</a>
+                        <a class="nav-link" href="#shop">Cửa Hàng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#stats">Thống Kê</a>
                     </li>
-                    <li class="nav-item ms-lg-3">
-                        <a href="https://discord.gg/eBgSSzCd" target="_blank" class="btn btn-discord">
-                            <i class="fab fa-discord me-2"></i>Discord
-                        </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Liên Hệ</a>
                     </li>
                 </ul>
             </div>
@@ -54,6 +153,132 @@
                         <a href="https://discord.gg/eBgSSzCd" target="_blank" class="btn btn-discord">
                             <i class="fab fa-discord me-2"></i>Tham Gia Discord
                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Added Premium Account Management Section -->
+    <section id="premium" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Quản Lý Tài Khoản Premium</h2>
+            <p class="section-subtitle">Các tính năng độc quyền dành cho thành viên premium</p>
+            
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="feature-title">Quyền Lợi Đặc Biệt</h3>
+                        <p class="feature-description">Truy cập các tính năng độc quyền, nhận ưu đãi đặc biệt và được ưu tiên hỗ trợ từ đội ngũ chuyên gia.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3 class="feature-title">Bảo Vệ Tài Khoản</h3>
+                        <p class="feature-description">Hệ thống bảo mật nâng cao bảo vệ tài khoản premium của bạn khỏi các mối đe dọa và truy cập trái phép.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <h3 class="feature-title">Chính Sách Cấm Tài Khoản</h3>
+                        <p class="feature-description">Tài khoản premium bị cấm sẽ được xử lý theo quy định nghiêm ngặt. Liên hệ hỗ trợ để khiếu nại hoặc phục hồi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Added Banned Premium Accounts Info Section -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="feature-card" style="border: 2px solid rgba(212, 175, 55, 0.3);">
+                        <h3 class="feature-title mb-3">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--primary-color); margin-right: 0.5rem;"></i>
+                            Tài Khoản Premium Bị Cấm
+                        </h3>
+                        <p class="feature-description mb-3">
+                            Các tài khoản premium bị cấm do vi phạm điều khoản dịch vụ sẽ mất toàn bộ quyền lợi. Lý do cấm bao gồm:
+                        </p>
+                        <ul class="feature-description" style="list-style-position: inside; color: var(--text-secondary);">
+                            <li>Sử dụng hack, cheat hoặc công cụ không hợp pháp</li>
+                            <li>Qu騷rành, lạm dụng hoặc hành vi độc hại</li>
+                            <li>Chia sẻ tài khoản hoặc bán tài khoản</li>
+                            <li>Spam, lừa đảo hoặc hoạt động gian lận</li>
+                            <li>Vi phạm các quy tắc cộng đồng</li>
+                        </ul>
+                        <p class="feature-description mt-3 mb-0">
+                            <strong>Để khiếu nại hoặc yêu cầu phục hồi tài khoản:</strong> Liên hệ với đội hỗ trợ qua email hoặc Discord với bằng chứng và lý do khiếu nại.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" class="shop-section">
+        <div class="container">
+            <h2 class="section-title">Cửa Hàng Tài Khoản Premium Minecraft</h2>
+            <p class="section-subtitle">Chọn gói tài khoản phù hợp với nhu cầu của bạn</p>
+            
+            <div class="row g-4">
+                <!-- Basic Package -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        <span class="product-badge">CƠ BẢN</span>
+                        <h3 class="product-name">Tài Khoản Cơ Bản</h3>
+                        <div class="product-price"><span class="product-price-currency">₫</span>99,000</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i>Tài khoản Minecraft chính thức</li>
+                            <li><i class="fas fa-check"></i>Truy cập Java Edition</li>
+                            <li><i class="fas fa-check"></i>Hỗ trợ 30 ngày</li>
+                            <li><i class="fas fa-check"></i>Đổi tên 1 lần</li>
+                            <li><i class="fas fa-times" style="color: #666;"></i>Skin Premium</li>
+                        </ul>
+                        <button class="btn btn-buy">Mua Ngay</button>
+                    </div>
+                </div>
+
+                <!-- Pro Package -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card featured">
+                        <span class="product-badge">PHỔ BIẾN</span>
+                        <h3 class="product-name">Tài Khoản Pro</h3>
+                        <div class="product-price"><span class="product-price-currency">₫</span>199,000</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i>Tài khoản Minecraft chính thức</li>
+                            <li><i class="fas fa-check"></i>Truy cập Java + Bedrock</li>
+                            <li><i class="fas fa-check"></i>Hỗ trợ 90 ngày</li>
+                            <li><i class="fas fa-check"></i>Đổi tên 3 lần</li>
+                            <li><i class="fas fa-check"></i>Skin Premium + Cape</li>
+                        </ul>
+                        <button class="btn btn-buy">Mua Ngay</button>
+                    </div>
+                </div>
+
+                <!-- Ultimate Package -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        <span class="product-badge">ULTIMATE</span>
+                        <h3 class="product-name">Tài Khoản Ultimate</h3>
+                        <div class="product-price"><span class="product-price-currency">₫</span>399,000</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i>Tài khoản Minecraft chính thức</li>
+                            <li><i class="fas fa-check"></i>Truy cập Java + Bedrock + Realms</li>
+                            <li><i class="fas fa-check"></i>Hỗ trợ 365 ngày</li>
+                            <li><i class="fas fa-check"></i>Đổi tên không giới hạn</li>
+                            <li><i class="fas fa-check"></i>Skin Premium + Cape + Emote</li>
+                        </ul>
+                        <button class="btn btn-buy">Mua Ngay</button>
                     </div>
                 </div>
             </div>
@@ -321,4 +546,3 @@
     </script>
 </body>
 </html>
-

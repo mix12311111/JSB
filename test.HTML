@@ -1,1 +1,969 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm Cao Cấp - Premium Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Linked external CSS file instead of inline styles -->
+    <link rel="stylesheet" href="css/assets/styles.css">
+    <style>
+        /* Add product shop styling */
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
 
+        .product-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--primary-color);
+            box-shadow: 0 30px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .product-card.featured {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(244, 208, 63, 0.05) 100%);
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .product-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .product-price-currency {
+            font-size: 1.2rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .product-features li {
+            padding: 0.8rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .product-features li:last-child {
+            border-bottom: none;
+        }
+
+        .product-features i {
+            color: var(--primary-color);
+            margin-right: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-buy {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-buy:hover {
+            background-color: #f4d03f;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .shop-section {
+            padding: 5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Added checkout modal styles */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .checkout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkout-modal.active {
+            display: flex;
+        }
+
+        .checkout-content {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 90%;
+            border: 2px solid var(--primary-color);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .checkout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        .checkout-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .product-info {
+            background-color: rgba(212, 175, 55, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-select option {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-option {
+            padding: 1rem;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .order-summary {
+            background-color: rgba(212, 175, 55, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            padding-top: 1rem;
+        }
+
+        .checkout-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-checkout {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-confirm {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+        }
+
+        .btn-confirm:hover {
+            background-color: #f4d03f;
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background-color: rgba(212, 175, 55, 0.2);
+            color: var(--text-primary);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-cancel:hover {
+            background-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .success-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .success-details {
+            background-color: rgba(212, 175, 55, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .detail-label {
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">PREMIUM</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Tính Năng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#shop">Cửa Hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stats">Thống Kê</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Liên Hệ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12 text-center">
+                    <span class="badge-new">🔥 SỰ KIỆN MỚI: BATTLE ROYALE 1000 NGƯỜI CHƠI</span>
+                    <h1 class="hero-title">Minecraft Mini-Games<br/>Server Hàng Đầu Việt Nam</h1>
+                    <p class="hero-subtitle">Trải nghiệm những trận chiến epic với hàng nghìn người chơi. Tham gia ngay để nhận phần thưởng khủng!</p>
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <a href="#register" class="btn btn-primary-custom">Đăng Ký Ngay</a>
+                        <a href="https://discord.gg/eBgSSzCd" target="_blank" class="btn btn-discord">
+                            <i class="fab fa-discord me-2"></i>Tham Gia Discord
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Added Premium Account Management Section -->
+    <section id="premium" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Quản Lý Tài Khoản Premium</h2>
+            <p class="section-subtitle">Các tính năng độc quyền dành cho thành viên premium</p>
+            
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="feature-title">Quyền Lợi Đặc Biệt</h3>
+                        <p class="feature-description">Truy cập các tính năng độc quyền, nhận ưu đãi đặc biệt và được ưu tiên hỗ trợ từ đội ngũ chuyên gia.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3 class="feature-title">Bảo Vệ Tài Khoản</h3>
+                        <p class="feature-description">Hệ thống bảo mật nâng cao bảo vệ tài khoản premium của bạn khỏi các mối đe dọa và truy cập trái phép.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <h3 class="feature-title">Chính Sách Cấm Tài Khoản</h3>
+                        <p class="feature-description">Tài khoản premium bị cấm sẽ được xử lý theo quy định nghiêm ngặt. Liên hệ hỗ trợ để khiếu nại hoặc phục hồi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Added Banned Premium Accounts Info Section -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="feature-card" style="border: 2px solid rgba(212, 175, 55, 0.3);">
+                        <h3 class="feature-title mb-3">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--primary-color); margin-right: 0.5rem;"></i>
+                            Tài Khoản Premium Bị Cấm
+                        </h3>
+                        <p class="feature-description mb-3">
+                            Các tài khoản premium bị cấm do vi phạm điều khoản dịch vụ sẽ mất toàn bộ quyền lợi. Lý do cấm bao gồm:
+                        </p>
+                        <ul class="feature-description" style="list-style-position: inside; color: var(--text-secondary);">
+                            <li>Sử dụng hack, cheat hoặc công cụ không hợp pháp</li>
+                            <li>Qu騷rành, lạm dụng hoặc hành vi độc hại</li>
+                            <li>Chia sẻ tài khoản hoặc bán tài khoản</li>
+                            <li>Spam, lừa đảo hoặc hoạt động gian lận</li>
+                            <li>Vi phạm các quy tắc cộng đồng</li>
+                        </ul>
+                        <p class="feature-description mt-3 mb-0">
+                            <strong>Để khiếu nại hoặc yêu cầu phục hồi tài khoản:</strong> Liên hệ với đội hỗ trợ qua email hoặc Discord với bằng chứng và lý do khiếu nại.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" class="shop-section">
+        <div class="container">
+            <h2 class="section-title">Cửa Hàng Tài Khoản Premium Minecraft</h2>
+            <p class="section-subtitle">Chọn gói tài khoản phù hợp với nhu cầu của bạn</p>
+            
+            <div class="row g-4">
+                <!-- Basic Package -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        <span class="product-badge">CƠ BẢN</span>
+                        <h3 class="product-name">Tài Khoản Cơ Bản</h3>
+                        <div class="product-price"><span class="product-price-currency">₫</span>99,000</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i>Tài khoản Minecraft chính thức</li>
+                            <li><i class="fas fa-check"></i>Truy cập Java Edition</li>
+                            <li><i class="fas fa-check"></i>Hỗ trợ 30 ngày</li>
+                            <li><i class="fas fa-check"></i>Đổi tên 1 lần</li>
+                            <li><i class="fas fa-times" style="color: #666;"></i>Skin Premium</li>
+                        </ul>
+                        <button class="btn btn-buy">Mua Ngay</button>
+                    </div>
+                </div>
+
+                <!-- Pro Package -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card featured">
+                        <span class="product-badge">PHỔ BIẾN</span>
+                        <h3 class="product-name">Tài Khoản Pro</h3>
+                        <div class="product-price"><span class="product-price-currency">₫</span>199,000</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i>Tài khoản Minecraft chính thức</li>
+                            <li><i class="fas fa-check"></i>Truy cập Java + Bedrock</li>
+                            <li><i class="fas fa-check"></i>Hỗ trợ 90 ngày</li>
+                            <li><i class="fas fa-check"></i>Đổi tên 3 lần</li>
+                            <li><i class="fas fa-check"></i>Skin Premium + Cape</li>
+                        </ul>
+                        <button class="btn btn-buy">Mua Ngay</button>
+                    </div>
+                </div>
+
+                <!-- Ultimate Package -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        <span class="product-badge">ULTIMATE</span>
+                        <h3 class="product-name">Tài Khoản Ultimate</h3>
+                        <div class="product-price"><span class="product-price-currency">₫</span>399,000</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i>Tài khoản Minecraft chính thức</li>
+                            <li><i class="fas fa-check"></i>Truy cập Java + Bedrock + Realms</li>
+                            <li><i class="fas fa-check"></i>Hỗ trợ 365 ngày</li>
+                            <li><i class="fas fa-check"></i>Đổi tên không giới hạn</li>
+                            <li><i class="fas fa-check"></i>Skin Premium + Cape + Emote</li>
+                        </ul>
+                        <button class="btn btn-buy">Mua Ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Người Chơi</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">1000</div>
+                        <div class="stat-label">Battle Royale</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Online</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Game Modes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Modes Section -->
+    <section id="games" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Game Modes Phổ Biến</h2>
+            <p class="section-subtitle">Khám phá những chế độ chơi hấp dẫn nhất</p>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="game-mode-card">
+                        <div class="game-icon">⚔️</div>
+                        <h3 class="game-title">Battle Royale</h3>
+                        <p class="game-description">Chiến đấu với 1000 người chơi trong trận chiến sinh tồn khốc liệt. Người cuối cùng sống sót sẽ là người chiến thắng!</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="game-mode-card">
+                        <div class="game-icon">🏰</div>
+                        <h3 class="game-title">Bed Wars</h3>
+                        <p class="game-description">Bảo vệ giường của bạn và phá hủy giường đối thủ. Làm việc nhóm để giành chiến thắng trong trận chiến đội hình.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="game-mode-card">
+                        <div class="game-icon">🌉</div>
+                        <h3 class="game-title">Sky Wars</h3>
+                        <p class="game-description">Chiến đấu trên những hòn đảo trên không. Thu thập tài nguyên và đánh bại đối thủ để trở thành người chiến thắng.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="game-mode-card">
+                        <div class="game-icon">🎯</div>
+                        <h3 class="game-title">Hunger Games</h3>
+                        <p class="game-description">Sinh tồn trong thế giới rộng lớn với tài nguyên hạn chế. Chiến lược và kỹ năng là chìa khóa chiến thắng.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="game-mode-card">
+                        <div class="game-icon">🏃</div>
+                        <h3 class="game-title">Parkour</h3>
+                        <p class="game-description">Thử thách kỹ năng nhảy của bạn qua những map parkour khó nhất. Phá vỡ kỷ lục và leo lên bảng xếp hạng.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="game-mode-card">
+                        <div class="game-icon">⛏️</div>
+                        <h3 class="game-title">Survival</h3>
+                        <p class="game-description">Chế độ sinh tồn kinh điển với cộng đồng thân thiện. Xây dựng, khám phá và phát triển cùng bạn bè.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Added Battle Royale Registration Section -->
+    <section id="register" class="registration-section">
+        <div class="container">
+            <h2 class="section-title">Đăng Ký Battle Royale</h2>
+            <p class="section-subtitle">Tham gia trận chiến 1000 người chơi và giành giải thưởng khủng</p>
+            
+            <div class="registration-card">
+                <span class="event-badge">🔥 SỰ KIỆN ĐẶC BIỆT</span>
+                
+                <div class="prize-info">
+                    <div class="text-center">
+                        <div class="prize-amount">10,000,000 VNĐ</div>
+                        <p class="mb-0 text-secondary">Tổng giải thưởng cho Top 10</p>
+                    </div>
+                </div>
+
+                <form id="registrationForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Tên Người Chơi *</label>
+                        <input type="text" class="form-control" id="username" placeholder="Nhập tên Minecraft của bạn" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="email" placeholder="email@example.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="teamMode" class="form-label">Chế Độ Chơi *</label>
+                        <select class="form-select" id="teamMode" required>
+                            <option value="">Chọn chế độ chơi</option>
+                            <option value="Solo">Solo (1 người)</option>
+                            <option value="Duo">Duo (2 người)</option>
+                            <option value="Squad">Squad (4 người)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="discord" class="form-label">Discord Username</label>
+                        <input type="text" class="form-control" id="discord" placeholder="username#1234">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">Kinh Nghiệm *</label>
+                        <select class="form-select" id="experience" required>
+                            <option value="">Chọn mức độ</option>
+                            <option value="Mới bắt đầu">Mới bắt đầu</option>
+                            <option value="Trung bình">Trung bình</option>
+                            <option value="Cao cấp">Cao cấp</option>
+                            <option value="Chuyên nghiệp">Chuyên nghiệp</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-custom w-100">
+                        <i class="fas fa-check-circle me-2"></i>Đăng Ký Ngay
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Added Success Modal -->
+    <div id="successModal" class="success-modal">
+        <div class="success-content">
+            <button class="close-modal" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <h3 class="success-title">Đăng Ký Thành Công!</h3>
+            <p class="text-center text-secondary mb-3">Chúc mừng bạn đã đăng ký thành công Battle Royale 1000 người chơi</p>
+            
+            <div class="account-info" id="accountInfo">
+                 Account details will be inserted here by JavaScript 
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="https://discord.gg/eBgSSzCd" target="_blank" class="btn btn-discord w-100 mb-2">
+                    <i class="fab fa-discord me-2"></i>Tham Gia Discord Ngay
+                </a>
+                <button onclick="closeModal()" class="btn btn-outline-custom w-100">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Added checkout modal -->
+    <div id="checkoutModal" class="checkout-modal">
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h2 class="checkout-title">Thanh Toán</h2>
+                <button class="close-btn" onclick="closeCheckout()">&times;</button>
+            </div>
+
+            <!-- Checkout Form -->
+            <div id="checkoutForm">
+                <div class="product-info">
+                    <div class="product-name" id="productName">Sản Phẩm Premium</div>
+                    <div class="product-price" id="productPrice">$99.99</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Họ và Tên</label>
+                    <input type="text" class="form-input" id="fullName" placeholder="Nhập họ và tên của bạn" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="email" placeholder="Nhập email của bạn" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Số Điện Thoại</label>
+                    <input type="tel" class="form-input" id="phone" placeholder="Nhập số điện thoại" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phương Thức Thanh Toán</label>
+                    <div class="payment-methods">
+                        <div class="payment-option selected" onclick="selectPayment(this, 'card')">
+                            <div class="payment-icon">💳</div>
+                            <div class="payment-name">Thẻ Tín Dụng</div>
+                        </div>
+                        <div class="payment-option" onclick="selectPayment(this, 'transfer')">
+                            <div class="payment-icon">🏦</div>
+                            <div class="payment-name">Chuyển Khoản</div>
+                        </div>
+                        <div class="payment-option" onclick="selectPayment(this, 'momo')">
+                            <div class="payment-icon">📱</div>
+                            <div class="payment-name">MoMo</div>
+                        </div>
+                        <div class="payment-option" onclick="selectPayment(this, 'zalo')">
+                            <div class="payment-icon">💬</div>
+                            <div class="payment-name">ZaloPay</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Giá sản phẩm:</span>
+                        <span id="subtotal">$99.99</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Phí vận chuyển:</span>
+                        <span>$0.00</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Tổng cộng:</span>
+                        <span id="total">$99.99</span>
+                    </div>
+                </div>
+
+                <div class="checkout-buttons">
+                    <button class="btn-checkout btn-confirm" onclick="completePayment()">Xác Nhận Thanh Toán</button>
+                    <button class="btn-checkout btn-cancel" onclick="closeCheckout()">Hủy</button>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="success-message">
+                <div class="success-icon">✓</div>
+                <div class="success-title">Đặt Hàng Thành Công!</div>
+                <div class="success-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Mã Đơn Hàng:</span>
+                        <span class="detail-value" id="orderCode">ORD-2025-001</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Tên Khách Hàng:</span>
+                        <span class="detail-value" id="customerName">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Email:</span>
+                        <span class="detail-value" id="customerEmail">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Phương Thức:</span>
+                        <span class="detail-value" id="paymentMethod">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Tổng Tiền:</span>
+                        <span class="detail-value" id="totalAmount">-</span>
+                    </div>
+                </div>
+                <button class="btn-checkout btn-confirm" onclick="closeCheckout()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links mb-4">
+                <a href="https://discord.gg/eBgSSzCd" target="_blank"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p class="text-secondary mb-2">Tham gia cộng đồng Discord để nhận thông báo về sự kiện</p>
+            <p class="text-secondary mb-0">&copy; 2025 Minecraft Mini-Games Server. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <!-- Added JavaScript for form handling and success modal -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Added checkout functionality JavaScript -->
+    <script>
+        let selectedPaymentMethod = 'card';
+        const paymentMethodNames = {
+            'card': 'Thẻ Tín Dụng',
+            'transfer': 'Chuyển Khoản',
+            'momo': 'MoMo',
+            'zalo': 'ZaloPay'
+        };
+
+        // Open checkout modal with product info
+        function openCheckout(productName, price) {
+            document.getElementById('productName').textContent = productName;
+            document.getElementById('productPrice').textContent = price;
+            document.getElementById('subtotal').textContent = price;
+            document.getElementById('total').textContent = price;
+            document.getElementById('checkoutModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close checkout modal
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.remove('active');
+            document.getElementById('checkoutForm').style.display = 'block';
+            document.getElementById('successMessage').classList.remove('show');
+            document.body.style.overflow = 'auto';
+            resetForm();
+        }
+
+        // Select payment method
+        function selectPayment(element, method) {
+            document.querySelectorAll('.payment-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedPaymentMethod = method;
+        }
+
+        // Complete payment
+        function completePayment() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            if (!fullName || !email || !phone) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+
+            // Generate order code
+            const orderCode = 'ORD-' + Date.now();
+            const totalAmount = document.getElementById('total').textContent;
+
+            // Show success message
+            document.getElementById('checkoutForm').style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            
+            // Update success details
+            document.getElementById('orderCode').textContent = orderCode;
+            document.getElementById('customerName').textContent = fullName;
+            document.getElementById('customerEmail').textContent = email;
+            document.getElementById('paymentMethod').textContent = paymentMethodNames[selectedPaymentMethod];
+            document.getElementById('totalAmount').textContent = totalAmount;
+
+            console.log('[v0] Order completed:', {
+                orderCode,
+                fullName,
+                email,
+                phone,
+                paymentMethod: selectedPaymentMethod,
+                total: totalAmount
+            });
+        }
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('fullName').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('phone').value = '';
+            selectedPaymentMethod = 'card';
+            document.querySelectorAll('.payment-option').forEach((el, index) => {
+                if (index === 0) el.classList.add('selected');
+                else el.classList.remove('selected');
+            });
+        }
+
+        // Add click handlers to all "Mua Ngay" buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const buyButtons = document.querySelectorAll('.btn-primary-custom, .btn-cta');
+            buyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    openCheckout('Sản Phẩm Premium', '$99.99');
+                });
+            });
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('checkoutModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCheckout();
+            }
+        });
+    </script>
+</body>
+</html>
